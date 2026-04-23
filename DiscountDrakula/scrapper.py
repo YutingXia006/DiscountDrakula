@@ -1,9 +1,7 @@
 import re
 import requests
-import json
-from datetime import datetime
 
-RELEVANT_SUPERMARKTS = ['Lidl', 'REWE', 'EDEKA']
+RELEVANT_SUPERMARKTS = {'Lidl', 'EDEKA'}
 LAT = 48.774465
 LNG = 9.185967
 
@@ -85,6 +83,7 @@ def parse_food_offers(data: dict) -> list[dict]:
             angebote.extend(parse_offer(offer_obj))
     return angebote
 
+
 def fetch_all_offers():
     brochure_ids = fetch_brochure_ids()
     all_offers = {}
@@ -93,7 +92,6 @@ def fetch_all_offers():
         angebote = parse_food_offers(raw_data)
         all_offers[name] = angebote
     return all_offers
-
 
 if __name__ == "__main__":
     print(fetch_all_offers())

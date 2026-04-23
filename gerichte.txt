@@ -1,0 +1,24 @@
+[Asiatisch]
+Bibimbap
+Kimbap
+doenjang-gug
+Thai-curry
+Japanische-curry
+Mapo-tofu
+Hotpot
+Ramen
+Frikadellen-Suppe
+Udonnudeln mit gebratenen Gemüse und tofu
+
+[Europäisch]
+Kässpätzle
+Pizza
+Pasta
+Burger
+Pommes
+Steak
+Überbackene Auberginen mit hack
+Goulasch-suppe
+Salat mit Feta
+Grillgemüse
+Chilli con Carne

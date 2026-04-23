@@ -1,0 +1,67 @@
+[Gewürz]
+Salz
+Pfeffer
+Knoblauch
+Thymian
+Dillspitzen
+Basilikum
+Kreuzkümmel (gemahlen)
+Zimt
+Rinderbrühe (Pulver)
+Delikatess Brühe (Pulver)
+Paprika rosenscharf
+Muskatnuss
+Kurkuma
+Garam Masala
+Majoran
+Kardamon
+Lorbeerblätter
+Sichuanpfeffer
+Sichuanpfeffer-Öl
+Laoganma
+Sesampaste
+Five-spice powder
+Gochujang
+Doengjang
+Bulgogisoße
+Thaicurry (rot)
+Misopaste
+Hoisinsoße
+Chili (ganz und gemahlen)
+Sojasoße (hell und Dunkel)
+Chinesischer Essig
+Weißweinessig
+Olivenöl (extra nativ)
+Sesamöl
+Chinesischer Kochwein
+Sonnenblumenöl
+Apfelessig
+Austernsoße 
+
+
+[Gemüse]
+Knoblauch
+Zwiebel
+Champignons
+
+[Kühlschrank]
+Tofu
+
+[Gefrierfach]
+Seelachsfilet
+Garnelen
+Schweinerippchen
+Schweinebauch
+Rotebeerenmischung
+Himbeere
+
+[Vorrat]
+Thunfisch
+Spaghetti
+Risottoreis
+Ramennudeln
+Langkornreis
+Frühstücksfleisch
+Gehackte Tomaten
+Kidneybohnen
+Kichererbsen

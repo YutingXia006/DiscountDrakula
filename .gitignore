@@ -8,6 +8,12 @@ __pycache__/
 *.pyc
 *.pyo
 
+# JSON-files
+json/
+
+# Generated plans
+plan_*.md
+
 # Environment variables
 .env
 
