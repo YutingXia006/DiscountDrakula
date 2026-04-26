@@ -5,49 +5,19 @@ import os
 from datetime import datetime
 from io_interface import parse_txt, format_angebote, format_kategorien
 
-# def aus_txt_laden(datei_pfad: str = "zutaten.txt") -> dict:
-#     zutaten = {}
-#     aktuelle_kategorie = "Sonstiges"
-    
-#     with open(datei_pfad, "r", encoding="utf-8") as f:
-#         for zeile in f:
-#             zeile = zeile.strip()
-#             if not zeile:
-#                 continue
-#             if zeile.startswith("[") and zeile.endswith("]"):
-#                 aktuelle_kategorie = zeile[1:-1]
-#                 zutaten[aktuelle_kategorie] = []
-#             else:
-#                 zutaten[aktuelle_kategorie].append(zeile)
-#     return zutaten
-
-# def parse_txt(dateipfad: str) -> dict:
-#     result = {}
-#     kategorie = None
-#     with open(dateipfad, "r", encoding="utf-8") as f:
-#         for zeile in f:
-#             zeile = zeile.strip()
-#             if not zeile:
-#                 continue
-#             if zeile.startswith("[") and zeile.endswith("]"):
-#                 kategorie = zeile[1:-1]
-#                 result[kategorie] = []
-#             elif kategorie:
-#                 result[kategorie].append(zeile)
-#     return result
-
 def call_ai(prompt: str) -> str:
     load_dotenv()
     client = Groq(
-        api_key=os.getenv('GROQ_API_KEY')
+        api_key=os.getenv('API_KEY')
     )
 
     response = client.chat.completions.create(
-        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "user", "content": prompt}
         ],
-        max_tokens=8000
+        max_tokens=8000,
+        temperature=0.7
     )
     content = response.choices[0].message.content
     return content #type: ignore
@@ -91,34 +61,68 @@ def build_recepie_prompt(angebote: dict, zutaten: dict, gerichte: dict):
     #     Lieblingsgerichte (erstelle ähnliche Gerichte):
     # {format_kategorien(gerichte)}
     return f"""
-    Du bist ein professioneller Küchenchef. Erstelle ein Speiseplan für eine Woche mit folgenden Vorgaben:
+    Du bist ein professioneller Küchenchef und Ernährungsberater. Erstelle einen Speiseplan für eine Woche.
 
     Zutaten die vorhanden sind:
     {format_kategorien(zutaten)}
 
-    Angebote dieser Woche
+    Angebote dieser Woche:
     {format_angebote(angebote, False)}
 
-    Rahmenbedingungen:
-    - Kreative Gerichte
-    - Portionen: 2 Personen
-    - Küche: Westlich und Östlich
-    - Kocherfahrung: Fortgeschrittener Hobbykoch
-    - Ernährungsweise: Kein Schweinefleisch, laktosearm, zuckerarm, kaloriearm, proteinreich
-    - STRIKT VERBOTEN: Paprika(Gemüse) , Mais, rohe Karroten, rohe Tomaten, gekochtes Lachs
+    MAKRO-ZIELE PRO TAG (pro Person, Ziel: Abnehmen):
+    - Kalorien: Person 1 → 1150-1200 kcal | Person 2 → 1400-1500 kcal
+    - Protein: mindestens 100-120g (Muskelerhalt beim Abnehmen)
+    - Kohlenhydrate: 100-130g
+    - Fett: 40-55g
+    - Ballaststoffe: mindestens 30g (Sättigung!)
 
-**Deine Antwort MUSS enthalten:**
-1. Wochenübersicht (Tabelle: Tag | Frühstück | Mittagessen | Abendessen)
-2. Pro Rezept:
+    HINWEIS: Rezepte für 2 Personen berechnen.
+    Person 1 reduziert Kohlenhydrat-Beilage um 30%.
+    Proteinquellen bleiben gleich für beide.
+
+    MAKRO-VERTEILUNG PRO MAHLZEIT:
+    - Frühstück: 25% der Tageskalorien
+    - Mittagessen: 40% der Tageskalorien
+    - Abendessen: 35% der Tageskalorien
+
+    WICHTIGE ANWEISUNGEN:
+    - Schreibe den Plan VOLLSTÄNDIG und KOMPLETT
+    - Überspringe KEINE Tage
+    - Kürze KEINE Rezepte ab
+
+    RAHMENBEDINGUNGEN:
+    - Portionen: 2 Personen
+    - Küche: Westlich und Östlich gemischt
+    - Kocherfahrung: Fortgeschrittener Hobbykoch
+    - Ernährungsweise: Kein Schweinefleisch, laktosearm, zuckerarm, kaloriearm, proteinreich, glutenfrei
+    - Jedes Gericht braucht einen kreativen konkreten Namen
+
+    STRIKT VERBOTEN:
+    - Zutaten: Paprika, Mais, rohe Karotten, rohe Tomaten, gekochter Lachs
+    - Vage Begriffe: "Gemüse", "Fleisch", "Gewürze", "Kräuter", "Öl" → IMMER spezifisch!
+    - Wiederholung: kein Gericht darf zweimal vorkommen
+
+    PFLICHTREGELN:
+    - Jede Zutat MIT Menge (g/ml/Stück/TL/EL)
+    - Jedes Gericht = Protein + Kohlenhydrat + spezifisches Gemüse
+    - Neue Zutaten erlaubt die nicht auf der Liste stehen
+    - Makros MÜSSEN realistisch berechnet sein
+
+    DEINE ANTWORT MUSS ENTHALTEN:
+    1. Wochenübersicht (Tabelle: Tag | Frühstück | Mittagessen | Abendessen)
+    2. Pro Rezept:
     - Zubereitungszeit & Kochzeit
     - Zutaten mit genauen Mengenangaben
+    - Makros pro Portion (Kalorien | Protein | Kohlenhydrate | Fett | Ballaststoffe)
     - Schritt-für-Schritt Anleitung (nummeriert)
     - Tipps & Variationen
     - Mögliche Ersatzzutaten
-3. Gesamte Einkaufsliste (sortiert nach Supermarkt)
+    3. Tages-Makro Zusammenfassung (Tabelle pro Tag)
+    4. Einkaufsliste mit fehlenden Zutaten (sortiert nach Kategorie)
 
-    Schreibe auf Deutsch in Markdown. Halte die Sprache einfach und verständlich.
+    Schreibe auf Deutsch in Markdown.
     """
+
 
 if __name__ == "__main__":
     offers = fetch_all_offers()

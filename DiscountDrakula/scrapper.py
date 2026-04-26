@@ -1,9 +1,18 @@
 import re
 import requests
+from dotenv import load_dotenv
+import os
 
-RELEVANT_SUPERMARKTS = {'Lidl', 'EDEKA'}
-LAT = 48.774465
-LNG = 9.185967
+try:
+    RELEVANT_SUPERMARKTS = os.environ["MARKETS"].split(",")
+except (TypeError, ValueError):
+    raise ValueError("MARKETS must be set in your .env file")
+
+try:
+    LAT = float(os.environ["LAT"])
+    LNG = float(os.environ["LNG"])
+except (TypeError, ValueError):
+    raise ValueError("LATITUDE and LONGITUDE must be set in your .env file")
 
 def fetch_brochure_ids():
     html = requests.get(
