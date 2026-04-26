@@ -26,9 +26,8 @@ def main():
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(filtered_offers, f, ensure_ascii=False, indent=2)
 
-    zutaten = parse_txt("zutaten.txt")
-    gerichte = parse_txt("gerichte.txt")
-    speiseplan_prompt = build_recepie_prompt(filtered_offers, zutaten, gerichte)
+    zutaten = parse_txt("data/vorhandene_zutaten.txt")
+    speiseplan_prompt = build_recepie_prompt(filtered_offers, zutaten)
     
     speiseplan = call_ai(speiseplan_prompt)
 

@@ -57,9 +57,7 @@ def build_filter_prompt(angebote: dict) -> str:
     Keine Erklärungen, nur JSON.
     """
 
-def build_recepie_prompt(angebote: dict, zutaten: dict, gerichte: dict): 
-    #     Lieblingsgerichte (erstelle ähnliche Gerichte):
-    # {format_kategorien(gerichte)}
+def build_recepie_prompt(angebote: dict, zutaten: dict): 
     return f"""
     Du bist ein professioneller Küchenchef und Ernährungsberater. Erstelle einen Speiseplan für eine Woche.
 
@@ -130,4 +128,4 @@ if __name__ == "__main__":
     gerichte = parse_txt("gerichte.txt")
     print(call_ai("das ist ein test, sag 'HelloWorld!'"))
     print(build_filter_prompt(offers))
-    print(build_recepie_prompt(offers, zutaten, gerichte))
+    print(build_recepie_prompt(offers, zutaten))

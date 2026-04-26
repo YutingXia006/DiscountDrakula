@@ -53,7 +53,8 @@ export LNG=your_longtitude´
 export MARKETS=REWE,Aldi,Lidl #(check how the market is written in kaufda.de)
 ```
 
-Dietary preferences can be changed in build_recepie_prompt() in ai_interface.py
+Dietary preferences can be changed in build_recepie_prompt() in ai_interface.py, please read these before your first run.
+Stuff in your pantry and/or fridge can be written into data/vorhandene_zutaten.txt.
 
 ### Run
 
