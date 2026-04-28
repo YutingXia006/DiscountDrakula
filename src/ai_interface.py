@@ -1,19 +1,30 @@
-from scrapper import fetch_all_offers
+from src.scrapper import fetch_all_offers
 from groq import Groq    
 from dotenv import load_dotenv
 import os
-from datetime import datetime
-from io_interface import parse_txt, format_angebote, format_kategorien
+from src.io_interface import parse_txt, format_angebote, format_kategorien
+load_dotenv()
+client = Groq(
+    api_key=os.getenv('API_KEY')
+)
 
-def call_ai(prompt: str) -> str:
-    load_dotenv()
-    client = Groq(
-        api_key=os.getenv('API_KEY')
-    )
+def call_recepie_ai(prompt: str) -> str:
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=8000,
+        temperature=0.7
+    )
+    content = response.choices[0].message.content
+    return content #type: ignore
+
+def call_filter_ai(prompt: str) -> str:
+    response = client.chat.completions.create(
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
+                messages=[
             {"role": "user", "content": prompt}
         ],
         max_tokens=8000,
@@ -126,6 +137,7 @@ if __name__ == "__main__":
     offers = fetch_all_offers()
     zutaten = parse_txt("zutaten.txt")
     gerichte = parse_txt("gerichte.txt")
-    print(call_ai("das ist ein test, sag 'HelloWorld!'"))
+    print(call_recepie_ai("das ist ein test, sag 'HelloWorld!'"))
+    print(call_filter_ai("das ist ein test, sag 'HelloWorld!'"))
     print(build_filter_prompt(offers))
     print(build_recepie_prompt(offers, zutaten))
