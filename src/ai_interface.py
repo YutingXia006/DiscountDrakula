@@ -78,6 +78,8 @@ def build_recepie_prompt(angebote: dict, zutaten: dict):
     Angebote dieser Woche:
     {format_angebote(angebote, False)}
 
+    Bevorzugte Küche in Reihenfolge: chinesisch, japanisch, südostasiatisch, westlich
+
     MAKRO-ZIELE PRO TAG (pro Person, Ziel: Abnehmen):
     - Kalorien: Person 1 → 1150-1200 kcal | Person 2 → 1400-1500 kcal
     - Protein: mindestens 100-120g (Muskelerhalt beim Abnehmen)

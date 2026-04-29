@@ -117,6 +117,14 @@ Grocery shopping as a student is a constant balancing act between budget and eat
 
 ---
 
+## Related Project
+
+For a more advanced meal planning experience with RAG-based recipe retrieval, check out [ConfabChef](https://github.com/YutingXia006/ConfabChef) — an AI cooking assistant that combines supermarket deal integration with a vector recipe database for smarter, context-aware meal suggestions.
+
+## Author
+
+Yuting Xia — [GitHub](https://github.com/YutingXia006) | [LinkedIn](https://www.linkedin.com/in/yuting-xia-89180a274/)
+
 ## 📄 License
 
 MIT License — do whatever you want with it.
